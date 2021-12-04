@@ -31,7 +31,7 @@ top_left_y = screen_height - play_height
 
 # MUSIC SECTION
 pygame.mixer.music.load('music/01Pondering.wav')
-pygame.mixer.music.play(-1, 0.0, 0)  # music starts immediately at third 0
+pygame.mixer.music.play(-1, 0.0, 50000)
 
 # SHAPE FORMATS
 
