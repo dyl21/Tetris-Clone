@@ -309,10 +309,10 @@ def draw_window(surface, grid, score=0, high_score=0):
     # high score
     high_score_label = font.render('High Score: ' + str(high_score), 1, (255, 255, 255))
 
-    hsx = top_left_x + 350
-    hsy = top_left_y + 300
+    h_sx = top_left_x + 350
+    h_sy = top_left_y + 300
 
-    surface.blit(high_score_label, (hsx + 20, hsy + 160))
+    surface.blit(high_score_label, (h_sx + 20, h_sy + 160))
 
     for row_val in range(len(grid)):
         for col_val in range(len(grid[row_val])):
