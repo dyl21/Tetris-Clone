@@ -3,6 +3,7 @@
 # Made with Pygame
 
 import pygame
+from pygame import mixer
 import random
 
 # creating the data structure for pieces
@@ -15,6 +16,8 @@ import random
 # - setting up the main
 
 pygame.font.init()
+pygame.mixer.pre_init(44100, -16, 2, 512)
+mixer.init()
 
 # GLOBALS VARS
 screen_width = 800
@@ -25,6 +28,10 @@ block_size = 30
 
 top_left_x = (screen_width - play_width) // 2
 top_left_y = screen_height - play_height
+
+# MUSIC SECTION
+pygame.mixer.music.load('music/01Pondering.wav')
+pygame.mixer.music.play(-1, 0.0, 0)  # music starts immediately at third 0
 
 # SHAPE FORMATS
 
@@ -365,7 +372,7 @@ def main(window):
                 if event.key == pygame.K_LEFT:
                     current_piece.x -= 1
                     if not (valid_space(current_piece, grid)):
-                        current_piece += 1
+                        current_piece.x += 1
 
                 if event.key == pygame.K_RIGHT:
                     current_piece.x += 1
