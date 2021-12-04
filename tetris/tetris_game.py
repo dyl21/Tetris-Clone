@@ -1,4 +1,4 @@
-# Tetris-like Puzzle Game
+# Tetris Clone Puzzle Game
 # By Dan and Jenny
 # Made with Pygame
 
