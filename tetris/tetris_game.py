@@ -330,6 +330,15 @@ def draw_window(surface, grid, score=0, high_score=0):
     pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5)
 
 
+def game_state():
+    """Creates the basis for game stage levels"""
+    def __init__(self):
+        self.state = 'level_1'
+
+    def level_1(self):
+# insert the code that draws the game to screen
+
+
 def main(window):
     high_score = max_score()
     locked_positions = {}
