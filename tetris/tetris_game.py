@@ -25,6 +25,7 @@ screen_height = 700
 play_width = 300  # meaning 300 // 10 = 30 width per block
 play_height = 600  # meaning 600 // 20 = 20 height per block
 block_size = 30
+level = 1
 
 top_left_x = (screen_width - play_width) // 2
 top_left_y = screen_height - play_height
@@ -275,6 +276,15 @@ def draw_next_shape(shape, surface):
         surface.blit(next_shape_label, (sx + 10, sy - 30))
 
 
+def saved_shape(surface):
+    font = pygame.font.SysFont('retro', 30)
+    swap_shape_label = font.render('Saved Shape:', 1, (255, 255, 255))
+    sx = top_left_x + play_width + 50
+    sy = top_left_y + play_height / 2 - 100
+    surface.blit(swap_shape_label, (sx + -10, sy - 30))
+    return get_shape()
+
+
 def max_score():
     with open('scores.txt', 'r') as file:
         lines = file.readlines()
@@ -295,30 +305,26 @@ def update_score(n_score):
     # Look to add previous and high score on screen
 
 
-def draw_window(surface, grid, score=0, high_score=0):
+def draw_window(surface, grid, score=0, high_score=0, level=0):
     surface.fill((0, 0, 0))
 
+    # Level label
     pygame.font.init()
     font = pygame.font.SysFont('retro', 60)
-    label = font.render('Tetris', 1, (255, 255, 255))  # (Name, anti-aliasing, color)
+    level_label = font.render(f'Level: {level}', 1, (255, 255, 255))  # (Name, anti-aliasing, color)
+    surface.blit(level_label, (top_left_x + play_width / 2 - (level_label.get_width() / 2), 30))
 
-    surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
-
-    # This is current score
+    # Current score
     font = pygame.font.SysFont('retro', 30)
     score_label = font.render('Score: ' + str(score), 1, (255, 255, 255))
-
     sx = top_left_x + play_width + 50
     sy = top_left_y + play_height / 2 - 100
-
-    surface.blit(score_label, (sx + 20, sy + 160))
+    surface.blit(score_label, (sx + 20, sy - 150))
 
     # high score
     high_score_label = font.render('High Score: ' + str(high_score), 1, (255, 255, 255))
-
     h_sx = top_left_x + 350
     h_sy = top_left_y + 300
-
     surface.blit(high_score_label, (h_sx + 20, h_sy + 160))
 
     for row_val in range(len(grid)):
@@ -330,12 +336,12 @@ def draw_window(surface, grid, score=0, high_score=0):
     pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5)
 
 
-def game_state():
-    """Creates the basis for game stage levels"""
-    def __init__(self):
-        self.state = 'level_1'
-
-    def level_1(self):
+# def game_state():
+#     """Creates the basis for game stage levels"""
+#     def __init__(self):
+#         self.state = 'level_1'
+#
+#     def level_1(self):
 # insert the code that draws the game to screen
 
 
@@ -398,6 +404,9 @@ def main(window):
                     if not (valid_space(current_piece, grid)):
                         current_piece.rotation -= 1
 
+                if event.key == pygame.K_SLASH:
+                    saved_shape(window)
+
         shape_pos = convert_shape_format(current_piece)  # Checks all positions of pieces
 
         for i in range(len(shape_pos)):
@@ -414,7 +423,7 @@ def main(window):
             change_piece = False
             score += clear_rows(grid, locked_positions) * 10
 
-        draw_window(window, grid, score, high_score)
+        draw_window(window, grid, score, high_score, level)
         draw_next_shape(next_piece, window)
         pygame.display.update()
 
