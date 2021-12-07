@@ -421,7 +421,15 @@ def main(window):
             current_piece = next_piece
             next_piece = get_shape()
             change_piece = False
-            score += clear_rows(grid, locked_positions) * 10
+            rows_cleared = clear_rows(grid, locked_positions)
+            if rows_cleared == 1:
+                score += 80
+            elif rows_cleared == 2:
+                score += 200
+            elif rows_cleared == 3:
+                score += 600
+            elif rows_cleared == 4:
+                score += 2400
 
         draw_window(window, grid, score, high_score, level)
         draw_next_shape(next_piece, window)
